@@ -1,13 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package projectpoo;
+package br.com.lanchonete.model;
 
-/**
- *
- * @author joao
- */
 public class ItemPedido {
-    
+    private int id;
+    private Integer quantidade;
+    private Pedido pedido;
+    private Produto produto;
 }
