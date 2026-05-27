@@ -1,16 +1,15 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- */
-
 package br.com.lanchonete;
 
-/**
- *
- * @author gutsk
- */
+import br.com.lanchonete.util.JPAUtil;
+import jakarta.persistence.EntityManager;
+
 public class Lanchonete {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        EntityManager em = JPAUtil.getEntityManager();
+
+        System.out.println("Conectado com sucesso!");
+
+        em.close();
     }
 }
