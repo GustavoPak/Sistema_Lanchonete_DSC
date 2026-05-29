@@ -12,7 +12,7 @@ import jakarta.persistence.ManyToOne;
 public class Produto {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     private String nome;
     private String descricao;
     private Double preco;
@@ -62,6 +62,14 @@ public class Produto {
 
     public void setAtivo(Boolean ativo) {
         this.ativo = ativo;
+    }
+    
+    public Categoria getCategoria(){
+        return categoria;
+    }
+    
+    public void setCategoria(Categoria categoria){
+        this.categoria = categoria;
     }
 }
 

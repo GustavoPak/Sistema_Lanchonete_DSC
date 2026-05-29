@@ -11,7 +11,7 @@ import jakarta.persistence.ManyToOne;
 public class ItemPedido {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     
     private Integer quantidade;
     

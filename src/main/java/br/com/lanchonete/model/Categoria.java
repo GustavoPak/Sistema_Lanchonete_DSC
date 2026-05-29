@@ -9,12 +9,12 @@ import jakarta.persistence.Id;
 public class Categoria {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
     public String nome;
     
     // GETTERS E SETTERS
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
@@ -22,11 +22,12 @@ public class Categoria {
         return nome;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
     public void setNome(String nome) {
         this.nome = nome;
     }
+    
 }
