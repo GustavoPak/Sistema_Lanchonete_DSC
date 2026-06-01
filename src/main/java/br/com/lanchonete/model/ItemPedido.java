@@ -15,6 +15,7 @@ public class ItemPedido {
     
     private Integer quantidade;
     
+    //Relações
     @ManyToOne
     @JoinColumn(name = "pedido_id")
     private Pedido pedido;

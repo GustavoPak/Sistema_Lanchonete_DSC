@@ -18,6 +18,7 @@ public class Produto {
     private Double preco;
     private boolean ativo;
     
+    //Relações
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;

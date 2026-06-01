@@ -18,6 +18,7 @@ public class Pedido {
     private String status;
     private Double valorTotal;
     
+    //Relações
     @ManyToOne
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
