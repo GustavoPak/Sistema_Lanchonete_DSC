@@ -7,7 +7,7 @@ import java.util.List;
 
 public class CategoriaDAO {
     
-    public void Salvar(Categoria categoria){
+    public void salvar(Categoria categoria){
         EntityManager em = JPAUtil.getEntityManager();
         em.getTransaction().begin();
         

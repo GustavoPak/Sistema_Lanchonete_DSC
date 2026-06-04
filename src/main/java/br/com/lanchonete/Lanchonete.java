@@ -7,9 +7,8 @@ public class Lanchonete {
 
     public static void main(String[] args) {
         EntityManager em = JPAUtil.getEntityManager();
-
-        System.out.println("Conectado com sucesso!");
-
+        
+        System.out.print("Conectado com sucesso!");
         em.close();
     }
 }
