@@ -75,4 +75,16 @@ public class ProdutoController {
     public List<Produto> listar() {
         return produtoDAO.listarTodos();
     }
+    
+    public List<Produto> buscarPorNome(String nome) {
+        return produtoDAO.buscarPorNome(nome);
+    }
+
+    public List<Produto> buscarPorCategoria(String categoria) {
+        return produtoDAO.buscarPorCategoria(categoria);
+    }
+    
+    public Produto buscarPorNomeExato(String nome) {
+    return produtoDAO.buscarPorNomeExato(nome);
+}
 }

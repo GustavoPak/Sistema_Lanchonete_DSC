@@ -15,7 +15,7 @@ public class PedidoView extends JFrame {
     private final PedidoController pedidoController;
     private final ClienteController clienteController;
 
-    private JComboBox<Cliente> cbClientes;
+    private JTextField txtNomeCliente;
     private JComboBox<String> cbStatus;
     private JTextField txtValorTotal;
 
@@ -30,7 +30,6 @@ public class PedidoView extends JFrame {
         clienteController = new ClienteController();
 
         inicializarComponentes();
-        carregarClientes();
         carregarTabela();
 
         setTitle("Cadastro de Pedidos");
@@ -46,7 +45,7 @@ public class PedidoView extends JFrame {
         JPanel painelFormulario = new JPanel(new GridLayout(3, 2, 10, 10));
         painelFormulario.setBorder(BorderFactory.createEmptyBorder(15, 15, 15, 15));
 
-        cbClientes = new JComboBox<>();
+        txtNomeCliente = new JTextField();
 
         cbStatus = new JComboBox<>(new String[]{
             "ABERTO",
@@ -57,8 +56,8 @@ public class PedidoView extends JFrame {
 
         txtValorTotal = new JTextField();
 
-        painelFormulario.add(new JLabel("Cliente:"));
-        painelFormulario.add(cbClientes);
+        painelFormulario.add(new JLabel("Nome do Cliente:"));
+        painelFormulario.add(txtNomeCliente);
 
         painelFormulario.add(new JLabel("Status:"));
         painelFormulario.add(cbStatus);
@@ -102,23 +101,32 @@ public class PedidoView extends JFrame {
         );
     }
 
-    private void carregarClientes() {
+    private Cliente buscarOuCriarCliente() {
 
-        cbClientes.removeAllItems();
+        String nomeCliente = txtNomeCliente.getText().trim();
 
-        List<Cliente> clientes = clienteController.listar();
-
-        for (Cliente cliente : clientes) {
-            cbClientes.addItem(cliente);
+        if (nomeCliente.isEmpty()) {
+            throw new IllegalArgumentException("Informe o nome do cliente.");
         }
+
+        Cliente cliente = clienteController.buscarPorNome(nomeCliente);
+
+        if (cliente == null) {
+            clienteController.salvar(nomeCliente);
+            cliente = clienteController.buscarPorNome(nomeCliente);
+        }
+
+        return cliente;
     }
 
     private void salvar() {
 
-        Cliente cliente = (Cliente) cbClientes.getSelectedItem();
+        Cliente cliente;
 
-        if (cliente == null) {
-            JOptionPane.showMessageDialog(this, "Selecione um cliente.");
+        try {
+            cliente = buscarOuCriarCliente();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
             return;
         }
 
@@ -158,10 +166,12 @@ public class PedidoView extends JFrame {
             return;
         }
 
-        Cliente cliente = (Cliente) cbClientes.getSelectedItem();
+        Cliente cliente;
 
-        if (cliente == null) {
-            JOptionPane.showMessageDialog(this, "Selecione um cliente.");
+        try {
+            cliente = buscarOuCriarCliente();
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, e.getMessage());
             return;
         }
 
@@ -228,9 +238,15 @@ public class PedidoView extends JFrame {
 
         for (Pedido pedido : pedidos) {
 
+            String nomeCliente = "";
+
+            if (pedido.getCliente() != null) {
+                nomeCliente = pedido.getCliente().getNome();
+            }
+
             modeloTabela.addRow(new Object[]{
                 pedido.getId(),
-                pedido.getCliente().getNome(),
+                nomeCliente,
                 pedido.getStatus(),
                 pedido.getValorTotal(),
                 pedido.getDataHora()
@@ -250,7 +266,9 @@ public class PedidoView extends JFrame {
 
             if (pedido != null) {
 
-                selecionarClienteNoCombo(pedido.getCliente().getId());
+                if (pedido.getCliente() != null) {
+                    txtNomeCliente.setText(pedido.getCliente().getNome());
+                }
 
                 cbStatus.setSelectedItem(pedido.getStatus());
 
@@ -261,24 +279,11 @@ public class PedidoView extends JFrame {
         }
     }
 
-    private void selecionarClienteNoCombo(Integer clienteId) {
-
-        for (int i = 0; i < cbClientes.getItemCount(); i++) {
-
-            Cliente cliente = cbClientes.getItemAt(i);
-
-            if (cliente.getId().equals(clienteId)) {
-                cbClientes.setSelectedIndex(i);
-                return;
-            }
-        }
-    }
-
     private void limparCampos() {
 
         idSelecionado = null;
 
-        cbClientes.setSelectedIndex(-1);
+        txtNomeCliente.setText("");
         cbStatus.setSelectedIndex(0);
         txtValorTotal.setText("");
 

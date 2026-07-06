@@ -68,5 +68,53 @@ public class ProdutoDAO {
         } finally {
             em.close();
         }
-    }    
+    }
+
+    public List<Produto> buscarPorNome(String nome) {
+    EntityManager em = JPAUtil.getEntityManager();
+
+     try {
+        return em.createQuery(
+                "SELECT p FROM Produto p WHERE LOWER(p.nome) LIKE LOWER(:nome)",
+                Produto.class
+        )
+        .setParameter("nome", "%" + nome + "%")
+        .getResultList();
+        } finally {
+        em.close();
+        }
+    }
+
+    public List<Produto> buscarPorCategoria(String categoria) {
+        EntityManager em = JPAUtil.getEntityManager();
+
+        try {
+            return em.createQuery(
+                "SELECT p FROM Produto p WHERE LOWER(p.categoria.nome) LIKE LOWER(:categoria)",
+                Produto.class
+        )
+        .setParameter("categoria", "%" + categoria + "%")
+        .getResultList();
+        } finally {
+        em.close();
+        }
+    }
+    
+    public Produto buscarPorNomeExato(String nome) {
+    EntityManager em = JPAUtil.getEntityManager();
+
+    try {
+        return em.createQuery(
+                "SELECT p FROM Produto p WHERE LOWER(p.nome) = LOWER(:nome)",
+                Produto.class
+        )
+        .setParameter("nome", nome)
+        .getSingleResult();
+
+    } catch (jakarta.persistence.NoResultException e) {
+        return null;
+    } finally {
+        em.close();
+    }
+    }
 }

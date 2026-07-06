@@ -55,4 +55,7 @@ public class ClienteController {
         return dao.listarTodos();
     }
     
+    public Cliente buscarPorNome(String nome) {
+    return dao.buscarPorNome(nome);
+    }
 }

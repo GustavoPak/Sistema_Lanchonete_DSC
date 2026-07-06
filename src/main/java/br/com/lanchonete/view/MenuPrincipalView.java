@@ -29,7 +29,7 @@ public class MenuPrincipalView extends JFrame {
         painelPrincipal.add(titulo, BorderLayout.NORTH);
 
         JPanel painelBotoes = new JPanel(new GridLayout(
-                2,
+                3,
                 2,
                 20,
                 20
@@ -48,6 +48,8 @@ public class MenuPrincipalView extends JFrame {
         JButton btnProdutos = new JButton("Produtos");
         JButton btnClientes = new JButton("Clientes");
         JButton btnPedidos = new JButton("Pedidos");
+        JButton btnBusca = new JButton("Busca");
+        JButton btnRelatorios = new JButton("Relatórios");
 
         Font fonteBotao = new Font("Arial", Font.BOLD, 18);
 
@@ -55,11 +57,15 @@ public class MenuPrincipalView extends JFrame {
         btnProdutos.setFont(fonteBotao);
         btnClientes.setFont(fonteBotao);
         btnPedidos.setFont(fonteBotao);
+        btnBusca.setFont(fonteBotao);
+        btnRelatorios.setFont(fonteBotao);
 
         painelBotoes.add(btnCategorias);
         painelBotoes.add(btnProdutos);
         painelBotoes.add(btnClientes);
         painelBotoes.add(btnPedidos);
+        painelBotoes.add(btnBusca);
+        painelBotoes.add(btnRelatorios);
 
         painelPrincipal.add(painelBotoes, BorderLayout.CENTER);
 
@@ -85,16 +91,19 @@ public class MenuPrincipalView extends JFrame {
         btnPedidos.addActionListener(e ->
                 new PedidoView().setVisible(true));
 
+        btnBusca.addActionListener(e ->
+                new BuscaView().setVisible(true));
+
+        btnRelatorios.addActionListener(e ->
+                new RelatorioView().setVisible(true));
+
         btnSair.addActionListener(e ->
                 System.exit(0));
     }
-    
+
     public static void main(String[] args) {
-    SwingUtilities.invokeLater(() -> {
-        new MenuPrincipalView().setVisible(true);
-    });
+        SwingUtilities.invokeLater(() -> {
+            new MenuPrincipalView().setVisible(true);
+        });
     }
 }
-
-
-

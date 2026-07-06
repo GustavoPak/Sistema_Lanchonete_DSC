@@ -79,4 +79,22 @@ public class PedidoDAO {
         }
     }
     
+    public Pedido buscarPorClienteEStatus(Integer clienteId, String status) {
+    EntityManager em = JPAUtil.getEntityManager();
+
+    try {
+        return em.createQuery(
+                "SELECT p FROM Pedido p WHERE p.cliente.id = :clienteId AND p.status = :status",
+                Pedido.class
+        )
+        .setParameter("clienteId", clienteId)
+        .setParameter("status", status)
+        .getSingleResult();
+
+    } catch (jakarta.persistence.NoResultException e) {
+        return null;
+    } finally {
+        em.close();
+    }
+}
 }

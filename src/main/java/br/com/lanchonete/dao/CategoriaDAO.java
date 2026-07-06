@@ -4,6 +4,7 @@ import br.com.lanchonete.model.Categoria;
 import br.com.lanchonete.util.JPAUtil;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import jakarta.persistence.NoResultException;
 
 public class CategoriaDAO {
     
@@ -70,5 +71,25 @@ public class CategoriaDAO {
         } finally {
             em.close();
         }
+    }
+    
+    public Categoria buscarPorNome(String nome) {
+
+    EntityManager em = JPAUtil.getEntityManager();
+
+    try {
+
+        return em.createQuery(
+                "SELECT c FROM Categoria c WHERE LOWER(c.nome) = LOWER(:nome)",
+                Categoria.class
+        )
+        .setParameter("nome", nome)
+        .getSingleResult();
+
+    } catch (NoResultException e) {
+        return null;
+    } finally {
+        em.close();
+    }
     }
 }

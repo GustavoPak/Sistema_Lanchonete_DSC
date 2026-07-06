@@ -42,4 +42,7 @@ public class CategoriaController {
         }
     }
    
+    public Categoria buscarPorNome(String nome) {
+        return dao.buscarPorNome(nome);
+    }
 }

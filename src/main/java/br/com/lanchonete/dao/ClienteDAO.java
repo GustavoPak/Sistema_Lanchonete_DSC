@@ -7,6 +7,7 @@ import br.com.lanchonete.util.JPAUtil;
 import br.com.lanchonete.model.Cliente;
 import jakarta.persistence.EntityManager;
 import java.util.List;
+import jakarta.persistence.NoResultException;
 /**
  *
  * @author joao
@@ -76,5 +77,25 @@ public class ClienteDAO {
         } finally {
             em.close();
         }
+    }
+    
+    public Cliente buscarPorNome(String nome) {
+
+    EntityManager em = JPAUtil.getEntityManager();
+
+    try {
+
+        return em.createQuery(
+                "SELECT c FROM Cliente c WHERE LOWER(c.nome) = LOWER(:nome)",
+                Cliente.class
+        )
+        .setParameter("nome", nome)
+        .getSingleResult();
+
+    } catch (NoResultException e) {
+        return null;
+    } finally {
+        em.close();
+    }
     }
 }

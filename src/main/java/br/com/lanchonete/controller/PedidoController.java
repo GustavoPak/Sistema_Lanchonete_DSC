@@ -90,4 +90,8 @@ public class PedidoController {
     public List<Pedido> listar() {
         return pedidoDAO.listarTodos();
     }
+    
+    public Pedido buscarPorClienteEStatus(Integer clienteId, String status) {
+    return pedidoDAO.buscarPorClienteEStatus(clienteId, status);
+}
 }
