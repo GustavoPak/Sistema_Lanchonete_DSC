@@ -17,6 +17,8 @@ public class LoginView extends JFrame {
 
         usuarioController = new UsuarioController();
 
+        criarUsuarioAdminSeNaoExistir();
+
         inicializarComponentes();
 
         setTitle("Login");
@@ -24,6 +26,21 @@ public class LoginView extends JFrame {
         setLocationRelativeTo(null);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setResizable(false);
+    }
+
+    private void criarUsuarioAdminSeNaoExistir() {
+
+        Usuario usuario = usuarioController.buscarPorLogin("admin");
+
+        if (usuario == null) {
+            usuarioController.cadastrarUsuario(
+                    "Administrador",
+                    "admin",
+                    "123"
+            );
+
+            System.out.println("Usuário admin criado automaticamente.");
+        }
     }
 
     private void inicializarComponentes() {
